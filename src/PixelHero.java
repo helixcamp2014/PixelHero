@@ -23,7 +23,7 @@ import java.io.IOException;
  * 
  */
 public class PixelHero{
-private int lattice[][]; //TODO: stores an int should this be an enum, or class?
+private GameObject lattice[][]; //TODO: stores an int should this be an enum, or class?
 private int rows;
 private int columns;
 private int currentStep;
@@ -34,16 +34,16 @@ private int currentStep;
 		{
 			throw new IllegalArgumentException("rows and columns must both be nonzero") ;
 		}
-		lattice = new int[rows][columns];//assume Java initializes to 0
+		lattice = new GameObject[rows][columns];//assume Java initializes to 0
 		this.rows = rows;
 		this.columns = columns;
 	};
 	
-	public PixelHero(int [][] initialState){
+	public PixelHero(GameObject [][] initialState){
 		currentStep = 0;
 		this.rows = initialState.length;
 		this.columns = initialState[0].length;
-		lattice = new int[rows][columns];
+		lattice = new GameObject[rows][columns];
 		
 		if(rows <= 0 || columns <= 0 || rows != columns )
 		{
@@ -65,7 +65,7 @@ private int currentStep;
 		{
 			for(int column = 0; column < columns; column++)
 			{
-				lattice[row][column] = 0;
+				lattice[row][column] = null;
 			}
 		}	
 		currentStep = 0;
@@ -92,11 +92,11 @@ private int currentStep;
 		    			{
 		    				if(text.charAt(columnIdx) == '.')
 		    				{
-		    					lattice[rowIdx][columnIdx] = 0;
+		    					lattice[rowIdx][columnIdx] = null;
 		    				} 
 		    				else if(text.charAt(columnIdx) == 'O')
 		    				{
-		    					lattice[rowIdx][columnIdx] = 1;
+		    					lattice[rowIdx][columnIdx] = null; //TODO: figure out what to instantiate
 		    				}
 		    			}
 		    		}
@@ -118,8 +118,8 @@ private int currentStep;
 		}
 		
 	}
-	
-	public int getStateAt(int row, int column)
+	//TODO: rename this to something more appropriate
+	public GameObject getStateAt(int row, int column)
 	{
 		return lattice[row][column];
 	}
@@ -144,7 +144,7 @@ private int currentStep;
 	 * what can we do about it?
 	 */
 	
-	public int[][] getCurrentState()
+	public GameObject[][] getCurrentState()
 	{
 		return lattice;
 	}
@@ -162,72 +162,19 @@ private int currentStep;
 		{
 			for(int column = 0; column < columns; column++)
 			{
-				nextState[row][column] = applyRule(row,column,lattice);
+				//nextState[row][column] = applyRule(row,column,lattice); //TODO: figure out what to do here
 			}
 		}		
 		
 		//replace lattice with next state
-		lattice = nextState;		
+		//lattice = nextState;		
 		currentStep++;
 	}
 	
-	/*
-	 * for now implement conway's game of life:
-	 * 
-    Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-    Any live cell with two or three live neighbours lives on to the next generation.
-    Any live cell with more than three live neighbours dies, as if by overcrowding.
-    Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 	
-	Also: 8-connected
-	Also: circular array
-	 */
-	private int applyRule(int row, int column, int [][] a_lattice)
-	{
-		/*
-		 * TODO: clever way to do this with iteration
-		 * 
-		 */
-		int liveNeighbours = 0;
-		liveNeighbours += getLeft(row, column, a_lattice);
-		liveNeighbours += getRight(row, column, a_lattice);
-		liveNeighbours += getUp(row, column, a_lattice);
-		liveNeighbours += getDown(row, column, a_lattice);
-		liveNeighbours += getUpLeft(row, column, a_lattice);
-		liveNeighbours += getUpRight(row, column, a_lattice);
-		liveNeighbours += getDownLeft(row, column, a_lattice);
-		liveNeighbours += getDownRight(row, column, a_lattice);
-
-		if(a_lattice[row][column] == 0) //dead
-		{
-			if(liveNeighbours == 3)
-			{
-				return 1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		else //alive
-		{
-			if(liveNeighbours < 2)
-			{
-				return 0;
-			}
-			else if(liveNeighbours == 2 || liveNeighbours == 3)
-			{
-				return 1;
-			}
-			else//greater than 3
-				return 0;
-		}
-		
-		
-	}
 	
 	//TODO: validate arguments
-	private int getLeft(int row, int column, int [][] a_lattice)
+	private GameObject getLeft(int row, int column, GameObject [][] a_lattice)
 	{
 		if(column ==0)
 		{
@@ -239,7 +186,7 @@ private int currentStep;
 		}
 	}
 	
-	private int getRight(int row, int column, int [][] a_lattice)
+	private GameObject getRight(int row, int column, GameObject [][] a_lattice)
 	{
 		if(column == a_lattice[row].length - 1)
 		{
@@ -252,7 +199,7 @@ private int currentStep;
 		
 	}
 	
-	private int getUp(int row, int column, int [][] a_lattice)
+	private GameObject getUp(int row, int column, GameObject [][] a_lattice)
 	{
 		if(row == 0)
 		{
@@ -265,7 +212,7 @@ private int currentStep;
 		
 	}
 	
-	private int getDown(int row, int column, int [][] a_lattice)
+	private GameObject getDown(int row, int column, GameObject [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
 		{
@@ -307,7 +254,7 @@ private int currentStep;
 		}
 	
 	}
-	private int getUpLeft(int row, int column, int [][] a_lattice)
+	private GameObject getUpLeft(int row, int column, GameObject [][] a_lattice)
 	{
 		if(row == 0)
 		{
@@ -337,7 +284,7 @@ private int currentStep;
 		}
 	
 	}
-	private int getDownRight(int row, int column, int [][] a_lattice)
+	private GameObject getDownRight(int row, int column, GameObject [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
 		{
@@ -366,7 +313,7 @@ private int currentStep;
 		}
 	
 	}
-	private int getDownLeft(int row, int column, int [][] a_lattice)
+	private GameObject getDownLeft(int row, int column, GameObject [][] a_lattice)
 	{
 		if(row == a_lattice.length - 1)
 		{
@@ -409,16 +356,14 @@ private int currentStep;
 		return result;
 	}
 	
-	public void toggleState(int row, int column)
+	public void placeGameObject(int row, int column, GameObject object)
 	{
-		if(lattice[row][column] == 0)
-		{
-			lattice[row][column] =1;
-		}
-		else
-		{
-			lattice[row][column] =0;
+		lattice[row][column] = object;
+	}
+	
+	public void removeGameObject(int row, int column)
+	{
+		lattice[row][column] = null;
 
-		}
 	}
 }
