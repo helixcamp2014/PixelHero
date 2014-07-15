@@ -2,6 +2,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.Label;
@@ -37,6 +38,9 @@ public class CA_GUI extends JPanel
     static int initialState[][];
     
     final JFileChooser fc = new JFileChooser();
+
+
+	private JTextArea textArea;
      
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
@@ -149,7 +153,7 @@ public class CA_GUI extends JPanel
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Cellular Automata are Rad");
+        JFrame frame = new JFrame("PixelHero2: The Sequel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          
         //Create and set up the content pane.
@@ -237,7 +241,18 @@ public class CA_GUI extends JPanel
         loadButton.addActionListener(this);
         controlsArea.add(loadButton);
         add(controlsArea, BorderLayout.SOUTH);
-                              
+                  
+        
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+         
+        JScrollPane textPane = new JScrollPane(textArea);
+        textPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        textPane.setPreferredSize(new Dimension(200, 75));
+        this.add(textPane, BorderLayout.NORTH);
+         
+        textArea.append("Hello");
+        
         
         //Register for mouse events on blankArea and the panel.
         //gridArea.addMouseListener(this);
