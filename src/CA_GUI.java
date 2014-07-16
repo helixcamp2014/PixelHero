@@ -72,8 +72,8 @@ public class CA_GUI extends JPanel
 				  { 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 },
 				};
 		*/
-        initialState = new GameObject[][] {};  //TODO: fix this!!!
-        
+        initialState = new GameObject[1][1];  //TODO: fix this!!!
+        initialState[0][0] = new GameObject(); 
         model = new PixelHero(initialState);
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
@@ -277,7 +277,7 @@ public class CA_GUI extends JPanel
 			//TODO: get this working and resize the grid beforehand!!!
 			//resetGrid();
 			
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("Game of Life Cell files", "cells");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Pixel Hero map files", "map");
 			fc.setFileFilter(filter);
 			int returnVal = fc.showOpenDialog(this);
 			

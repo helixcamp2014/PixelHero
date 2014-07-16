@@ -1,4 +1,10 @@
 
-public class Dragon {
-	private int damage = 8;
+public class Dragon extends Character{
+	private int damage;
+	
+	public Dragon()
+	{
+		damage = 8;
+		type_id = 'D';
+	}
 }

@@ -17,14 +17,18 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
     	this.column_id = column_id;
     	this.model = model;
     	
-    	/*if(model.getStateAt(row_id, column_id) == 1)
+    	if(model.getStateAt(row_id, column_id).getTypeId() == 'H')
 		{
-			setBackground(Color.black);
+			setBackground(Color.blue);
+		}
+    	else if(model.getStateAt(row_id, column_id).getTypeId() == 'D')
+		{
+			setBackground(Color.red);
 		}
 		else
 		{
 			setBackground(Color.white);
-		}*/
+		}
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.black));
         addMouseListener(this);

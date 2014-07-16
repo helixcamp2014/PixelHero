@@ -71,14 +71,14 @@ private int currentStep;
 		currentStep = 0;
 	}
 	
-	public void loadStateFromFile(File cellsFile)
+	public void loadStateFromFile(File gameFile)
 	{
 		BufferedReader reader = null;
 		
 		reset();
 
 		try {
-		    reader = new BufferedReader(new FileReader(cellsFile));
+		    reader = new BufferedReader(new FileReader(gameFile));
 		    String text = null;
 		    int rowIdx = 0;
 
@@ -94,9 +94,13 @@ private int currentStep;
 		    				{
 		    					lattice[rowIdx][columnIdx] = null;
 		    				} 
-		    				else if(text.charAt(columnIdx) == 'O')
+		    				else if(text.charAt(columnIdx) == 'H')
 		    				{
-		    					lattice[rowIdx][columnIdx] = null; //TODO: figure out what to instantiate
+		    					lattice[rowIdx][columnIdx] = new Hero(); //TODO: figure out what to instantiate
+		    				}
+		    				else if(text.charAt(columnIdx) == 'D')
+		    				{
+		    					lattice[rowIdx][columnIdx] = new Dragon();
 		    				}
 		    			}
 		    		}
@@ -121,7 +125,15 @@ private int currentStep;
 	//TODO: rename this to something more appropriate
 	public GameObject getStateAt(int row, int column)
 	{
-		return lattice[row][column];
+		if(lattice[row][column] != null)
+		{
+			return lattice[row][column];
+		}
+		else
+		{
+			return new GameObject();
+		}
+	
 	}
 	
 	
