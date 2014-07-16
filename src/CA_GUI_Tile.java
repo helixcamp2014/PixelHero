@@ -16,14 +16,15 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
     	this.row_id = row_id;
     	this.column_id = column_id;
     	this.model = model;
-    	if(model.getStateAt(row_id, column_id) == 1)
+    	
+    	/*if(model.getStateAt(row_id, column_id) == 1)
 		{
 			setBackground(Color.black);
 		}
 		else
 		{
 			setBackground(Color.white);
-		}
+		}*/
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.black));
         addMouseListener(this);
@@ -39,20 +40,7 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//toggle the state of the correct lattice
-		model.toggleState(row_id, column_id);
-		if(model.getStateAt(row_id, column_id) == 1)
-		{
-			//setBackground(Color.black);
-			setBackground(Color.green);
-		}
-		else
-		{
-			//setBackground(Color.white);
-			setBackground(Color.black);
-		}
-		repaint();
-		System.out.println("grid was clicked: " + row_id + ", " + column_id);
+		
 	}
 	
 	
@@ -60,6 +48,7 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 	public void paint(Graphics g)
 	{
 		//determine color
+		/*
 		if(model.getStateAt(row_id, column_id) == 1)
 		{
 			//setBackground(Color.black);
@@ -70,6 +59,7 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 			//setBackground(Color.white);
 			setBackground(Color.black);
 		}
+		*/
 		//System.out.println("grid was painted: " + row_id + ", " + column_id);
 		super.paint(g);
 	}
