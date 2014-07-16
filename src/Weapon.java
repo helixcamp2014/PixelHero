@@ -1,4 +1,4 @@
 
 public class Weapon {
-	int damage = 4;
+	public int damage = 4;
 }

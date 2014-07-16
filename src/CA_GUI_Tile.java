@@ -52,18 +52,20 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 	public void paint(Graphics g)
 	{
 		//determine color
-		/*
-		if(model.getStateAt(row_id, column_id) == 1)
+		
+		if(model.getStateAt(row_id, column_id).getTypeId() == 'H')
 		{
-			//setBackground(Color.black);
-			setBackground(Color.green);
+			setBackground(Color.blue);
+		}
+    	else if(model.getStateAt(row_id, column_id).getTypeId() == 'D')
+		{
+			setBackground(Color.red);
 		}
 		else
 		{
-			//setBackground(Color.white);
-			setBackground(Color.black);
+			setBackground(Color.white);
 		}
-		*/
+		
 		//System.out.println("grid was painted: " + row_id + ", " + column_id);
 		super.paint(g);
 	}

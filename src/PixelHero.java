@@ -27,6 +27,7 @@ private GameObject lattice[][]; //TODO: stores an int should this be an enum, or
 private int rows;
 private int columns;
 private int currentStep;
+private Hero ourHero;
 
 	public PixelHero(int rows, int columns){
 		currentStep = 0;
@@ -37,12 +38,16 @@ private int currentStep;
 		lattice = new GameObject[rows][columns];//assume Java initializes to 0
 		this.rows = rows;
 		this.columns = columns;
+		ourHero = null;
+		
 	};
 	
 	public PixelHero(GameObject [][] initialState){
 		currentStep = 0;
 		this.rows = initialState.length;
 		this.columns = initialState[0].length;
+		ourHero = null;
+
 		lattice = new GameObject[rows][columns];
 		
 		if(rows <= 0 || columns <= 0 || rows != columns )
@@ -96,7 +101,10 @@ private int currentStep;
 		    				} 
 		    				else if(text.charAt(columnIdx) == 'H')
 		    				{
-		    					lattice[rowIdx][columnIdx] = new Hero(); //TODO: figure out what to instantiate
+		    					ourHero = new Hero();
+		    					ourHero.setColumnIndex(columnIdx);
+		    					ourHero.setRowIndex(rowIdx);
+		    					lattice[rowIdx][columnIdx] = ourHero; 
 		    				}
 		    				else if(text.charAt(columnIdx) == 'D')
 		    				{
@@ -375,7 +383,13 @@ private int currentStep;
 	
 	public void removeGameObject(int row, int column)
 	{
+		
 		lattice[row][column] = null;
 
+	}
+	
+	public Hero getHero()
+	{
+		return ourHero;
 	}
 }
