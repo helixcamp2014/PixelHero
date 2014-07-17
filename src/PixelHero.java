@@ -445,19 +445,26 @@ public class PixelHero{
     	{
     		aMonster.health = aMonster.health - theHero.weapon.damage;
     		
-    		String temp = "Thou hast dealt: " + theHero.weapon.damage + " to the " + aMonster.description + "!!! \n";
+    		String temp = "Thou hast dealt " + theHero.weapon.damage + " to the " + aMonster.description + "!!! \n";
     		output.append(temp);
 
     	}
     	else
     	{
-    		String temp = "the " + aMonster.description + " dodged the attack!! \n";
+    		String temp = null;
+    		if(Math.random() < 0.5) {
+    			temp = "Thy vile " + aMonster.description + " dodged the attack!! \n";
+    		}
+    		else {
+    			temp = "Thy putrid " + aMonster.description + " dodged the attack!! \n";
+    		}
+    		// TODO: MOAR ADJECTIVES!!!!!!!!
     		output.append(temp);
     	}
     	
     	if(aMonster.health <=0)
     	{
-    		String temp = "the " + aMonster.description + " was slain!!!! \n";
+    		String temp = "The " + aMonster.description + " was slain!!!! \n";
     		aMonster.alive = false;
     		output.append(temp);
     	}
@@ -474,7 +481,7 @@ public class PixelHero{
     			int tempDamage = aMonster.damage - damageReduction;
     			theHero.health = theHero.health - tempDamage;
         		
-        		String temp = "The " + aMonster.description + " hast hit thou for: " + tempDamage + " life!!! \n";
+        		String temp = "Thy vile " + aMonster.description + " hast hit thou for: " + tempDamage + " life!!! \n";
         		output.append(temp);
 
         		temp = "Thy remianing hit points are: " + theHero.health + "\n";
@@ -484,12 +491,12 @@ public class PixelHero{
         	}
         	else
         	{
-        		String temp = "thou hast dodged the attack!! \n";
+        		String temp = "Thou hast dodged the attack!! \n";
         		output.append(temp);
         	}
     		if(theHero.health <=0)
         	{
-        		String temp = "thou art slain!!!!! \n";
+        		String temp = "Thou art slain!!!!! \n";
         		theHero.alive = false;
         		output.append(temp);
         	}
