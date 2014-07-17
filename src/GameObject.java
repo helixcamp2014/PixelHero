@@ -2,7 +2,11 @@
 public class GameObject {
 	protected char type_id = '0'; // let's say this means undefined
 	protected int row_index = 0;
-	protected int column_index = 0;
+	protected int column_index = 0; 
+	
+	protected boolean canBeSteppedOn = false;
+	
+	protected String description = "default object";
 	
 	
 	public char getTypeId()
@@ -27,6 +31,16 @@ public class GameObject {
 	public int getColumnIndex()
 	{
 		return column_index;
+	}
+	
+	public boolean canBeSteppedOn()
+	{
+		return canBeSteppedOn;
+	}
+	
+	public String getDescription()
+	{
+		return description;
 	}
 	
 }

@@ -225,66 +225,9 @@ public class CA_GUI extends JPanel
         
     }
     
-    private void resolveCombat(Hero theHero, Dragon theDragon)
-    {
-    	double hero_chance_to_hit_dragon = 0.80;
-    	double dragon_chance_to_hit_hero = 0.80;
-    	
-    	if(Math.random() < hero_chance_to_hit_dragon)
-    	{
-    		theDragon.health = theDragon.health - theHero.weapon.damage;
-    		
-    		String temp = "Thou hast dealt: " + theHero.weapon.damage + " to the dragon!!! \n";
-    		textArea.append(temp);
-
-    	}
-    	else
-    	{
-    		String temp = "the dragon dodged the attack!! \n";
-    		textArea.append(temp);
-    	}
-    	
-    	if(theDragon.health <=0)
-    	{
-    		String temp = "the dragon was slain!!!! \n";
-    		textArea.append(temp);
-    	}
-    	else
-    	{
-    		if(Math.random() < dragon_chance_to_hit_hero)
-        	{
-        		int damageReduction = 0;
-        		//TODO: test if this works
-    			if(theHero.armor.durability > 0){
-        			damageReduction = theHero.armor.damageReduction;
-        			theHero.armor.durability -= theDragon.damage;
-        		}
-    			int tempDamage = theDragon.damage - damageReduction;
-    			theHero.health = theHero.health - tempDamage;
-        		
-        		String temp = "The dragon hast hit thou for: " + tempDamage + " life!!! \n";
-        		textArea.append(temp);
-
-        		temp = "Thy remianing hit points are: " + theHero.health + "\n";
-
-        		textArea.append(temp);
-
-        	}
-        	else
-        	{
-        		String temp = "thou hast dodged the attack!! \n";
-        		textArea.append(temp);
-        	}
-    		if(theHero.health <=0)
-        	{
-        		String temp = "thou art slain!!!!! \n";
-        		textArea.append(temp);
-        	}
-    	}
-    	
-    	
-    }
     
+    
+    /*
     private boolean isTheDragonIn(int rowIdx, int colIdx)
     {
     	
@@ -298,6 +241,13 @@ public class CA_GUI extends JPanel
     	}
     	return false;
     }
+    */
+    
+    public void interactWithObject(int rowIdx, int colIdx)
+    {
+    	//we only have monsters right now so fight!
+    	model.interactWithObject(rowIdx, colIdx, textArea);
+    }
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -308,19 +258,19 @@ public class CA_GUI extends JPanel
 			int hero_column = tempHero.getColumnIndex();
 			
 			int newHeroRow = hero_row - 1;
-			if(hero_row > 0 && !isTheDragonIn(newHeroRow, hero_column))
+			if(hero_row > 0) 
 			{
-				//move the hero
-				model.removeGameObject(hero_row, hero_column);
-				model.placeGameObject(newHeroRow, hero_column, tempHero);
-				tempHero.setRowIndex(newHeroRow);
-				textArea.append("hero is now in row: " + newHeroRow + " new hero column: " + hero_column + "\n");
+				if(model.canEnter(newHeroRow, hero_column)){
+					//move the hero
+					model.removeGameObject(hero_row, hero_column);
+					model.placeGameObject(newHeroRow, hero_column, tempHero);
+					tempHero.setRowIndex(newHeroRow);
+					textArea.append("hero is now in row: " + newHeroRow + " new hero column: " + hero_column + "\n");
+				}else{
+					model.interactWithObject(newHeroRow, hero_column, textArea);
+				}
 			}
-			else if(isTheDragonIn(newHeroRow, hero_column))
-			{
-				Dragon theDragon = (Dragon) model.getStateAt(newHeroRow, hero_column);
-				resolveCombat(tempHero, theDragon);
-			}
+			
 			else
 			{
 				textArea.append("You can't move up any further\n");
@@ -334,36 +284,49 @@ public class CA_GUI extends JPanel
 			Hero tempHero = model.getHero();
 			int hero_row = tempHero.getRowIndex();
 			int hero_column = tempHero.getColumnIndex();
-					
-			if(hero_row >= model.getColumns() - 1)
+			
+			int newHeroRow = hero_row + 1;
+			if(hero_row < model.getRows() - 1) 
 			{
-				//move the hero
-				model.removeGameObject(hero_row, hero_column);
-				model.placeGameObject(hero_row + 1, hero_column, tempHero);
-				tempHero.setRowIndex(hero_row + 1);
-
+				if(model.canEnter(newHeroRow, hero_column)){
+					//move the hero
+					model.removeGameObject(hero_row, hero_column);
+					model.placeGameObject(newHeroRow, hero_column, tempHero);
+					tempHero.setRowIndex(newHeroRow);
+					textArea.append("hero is now in row: " + newHeroRow + " new hero column: " + hero_column + "\n");
+				}else{
+					model.interactWithObject(newHeroRow, hero_column, textArea);
+				}
 			}
+			
 			else
 			{
 				textArea.append("You can't move down any further\n");
 			}
 	    	gridArea.repaint();
-
 			
+						
 		}
 		else if(e.getActionCommand() == "move_left")
 		{
 			Hero tempHero = model.getHero();
 			int hero_row = tempHero.getRowIndex();
 			int hero_column = tempHero.getColumnIndex();
-					
-			if(hero_row >= 0)
+			
+			int newHeroColumn = hero_column - 1;
+			if(hero_row > 0) 
 			{
-				//move the hero
-				model.removeGameObject(hero_row, hero_column);
-				model.placeGameObject(hero_row, hero_column - 1, tempHero);
-				tempHero.setColumnIndex(hero_column - 1);
+				if(model.canEnter(hero_row, newHeroColumn)){
+					//move the hero
+					model.removeGameObject(hero_row, hero_column);
+					model.placeGameObject(hero_row, newHeroColumn, tempHero);
+					tempHero.setColumnIndex(newHeroColumn);
+					textArea.append("hero is now in row: " + hero_row + " new hero column: " + newHeroColumn + "\n");
+				}else{
+					model.interactWithObject(hero_row, newHeroColumn, textArea);
+				}
 			}
+			
 			else
 			{
 				textArea.append("You can't move left any further\n");
@@ -377,20 +340,27 @@ public class CA_GUI extends JPanel
 			Hero tempHero = model.getHero();
 			int hero_row = tempHero.getRowIndex();
 			int hero_column = tempHero.getColumnIndex();
-					
-			if(hero_row <= model.getColumns() - 1)
+			
+			int newHeroColumn = hero_column + 1;
+			if(hero_row < model.getColumns() - 1) 
 			{
-				//move the hero
-				model.removeGameObject(hero_row, hero_column);
-				model.placeGameObject(hero_row, hero_column + 1, tempHero);
-				tempHero.setColumnIndex(hero_column + 1);
-
+				if(model.canEnter(hero_row, newHeroColumn)){
+					//move the hero
+					model.removeGameObject(hero_row, hero_column);
+					model.placeGameObject(hero_row, newHeroColumn, tempHero);
+					tempHero.setColumnIndex(newHeroColumn);
+					textArea.append("hero is now in row: " + hero_row + " new hero column: " + newHeroColumn + "\n");
+				}else{
+					model.interactWithObject(hero_row, newHeroColumn, textArea);
+				}
 			}
+			
 			else
 			{
 				textArea.append("You can't move right any further\n");
 			}
 	    	gridArea.repaint();
+
 
 		}
 	
@@ -415,7 +385,7 @@ public class CA_GUI extends JPanel
 	            
 	            //int temp = (int)(sizeSpinner.getModel().getValue());
 	            int temp = 10;
-	    		model = new PixelHero(temp, temp);
+	    		model = new PixelHero(PixelHero.map_size, PixelHero.map_size);
 	            
 	            model.loadStateFromFile(file);            
 	            

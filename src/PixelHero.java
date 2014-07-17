@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JTextArea;
+
 /*
  * should this class be immutable?
  * memory vs. time vs. parallelism considerations
@@ -23,11 +25,12 @@ import java.io.IOException;
  * 
  */
 public class PixelHero{
-private GameObject lattice[][]; //TODO: stores an int should this be an enum, or class?
-private int rows;
-private int columns;
-private int currentStep;
-private Hero ourHero;
+	public static final int map_size = 10;
+	private GameObject lattice[][]; //TODO: stores an int should this be an enum, or class?
+	private int rows;
+	private int columns;
+	private int currentStep;
+	private Hero ourHero;
 
 	public PixelHero(int rows, int columns){
 		currentStep = 0;
@@ -131,7 +134,7 @@ private Hero ourHero;
 		
 	}
 	//TODO: rename this to something more appropriate
-	public GameObject getStateAt(int row, int column)
+	public GameObject getObjectAt(int row, int column)
 	{
 		if(lattice[row][column] != null)
 		{
@@ -369,7 +372,7 @@ private Hero ourHero;
 		{
 			for(int column = 0; column < columns; column++)
 			{
-				result += getStateAt(row, column);
+				result += getObjectAt(row, column);
 			}
 			result += "\n";
 		}
@@ -392,4 +395,107 @@ private Hero ourHero;
 	{
 		return ourHero;
 	}
+	
+	public boolean canEnter(int row, int column)
+	{
+		if(lattice[row][column] == null) 
+			return true;
+		else if(lattice[row][column].canBeSteppedOn())
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public void interactWithObject(int row, int column , JTextArea output)
+	{
+		if(getObjectAt(row, column) != null)
+		{
+			//normally you should check what type of object is at row, column but we only have monsters right now
+			//so fight it!
+			//this will totally crash if you have a wall or tree at row, column
+			Character aCharacter = (Character)getObjectAt(row, column);
+			if(aCharacter.alive)
+			{
+				resolveCombat(ourHero, aCharacter , output);
+			}
+			else
+			{
+				String temp = "The " + aCharacter.description + " is dead... \n";
+				output.append(temp);
+
+			}
+		}
+		else
+		{
+			String temp = "Nothing there... \n";
+    		output.append(temp);
+		}
+	}
+	
+	
+	
+	public void resolveCombat(Hero theHero, Character aMonster, JTextArea output)
+    {
+    	//moved into character
+		//double hero_chance_to_hit_dragon = 0.80;
+    	//double dragon_chance_to_hit_hero = 0.80;
+    	
+    	if(Math.random() < theHero.chance_to_hit_an_enemy)
+    	{
+    		aMonster.health = aMonster.health - theHero.weapon.damage;
+    		
+    		String temp = "Thou hast dealt: " + theHero.weapon.damage + " to the " + aMonster.description + "!!! \n";
+    		output.append(temp);
+
+    	}
+    	else
+    	{
+    		String temp = "the " + aMonster.description + " dodged the attack!! \n";
+    		output.append(temp);
+    	}
+    	
+    	if(aMonster.health <=0)
+    	{
+    		String temp = "the " + aMonster.description + " was slain!!!! \n";
+    		aMonster.alive = false;
+    		output.append(temp);
+    	}
+    	else
+    	{
+    		if(Math.random() < aMonster.chance_to_hit_an_enemy)
+        	{
+        		int damageReduction = 0;
+        		//TODO: test if this works
+    			if(theHero.armor.durability > 0){
+        			damageReduction = theHero.armor.damageReduction;
+        			theHero.armor.durability -= aMonster.damage;
+        		}
+    			int tempDamage = aMonster.damage - damageReduction;
+    			theHero.health = theHero.health - tempDamage;
+        		
+        		String temp = "The " + aMonster.description + " hast hit thou for: " + tempDamage + " life!!! \n";
+        		output.append(temp);
+
+        		temp = "Thy remianing hit points are: " + theHero.health + "\n";
+
+        		output.append(temp);
+
+        	}
+        	else
+        	{
+        		String temp = "thou hast dodged the attack!! \n";
+        		output.append(temp);
+        	}
+    		if(theHero.health <=0)
+        	{
+        		String temp = "thou art slain!!!!! \n";
+        		theHero.alive = false;
+        		output.append(temp);
+        	}
+    	}
+    	
+    	
+    }
+	
 }

@@ -17,11 +17,11 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
     	this.column_id = column_id;
     	this.model = model;
     	
-    	if(model.getStateAt(row_id, column_id).getTypeId() == 'H')
+    	if(model.getObjectAt(row_id, column_id).getTypeId() == 'H')
 		{
 			setBackground(Color.blue);
 		}
-    	else if(model.getStateAt(row_id, column_id).getTypeId() == 'D')
+    	else if(model.getObjectAt(row_id, column_id).getTypeId() == 'D')
 		{
 			setBackground(Color.red);
 		}
@@ -53,11 +53,11 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 	{
 		//determine color
 		
-		if(model.getStateAt(row_id, column_id).getTypeId() == 'H')
+		if(model.getObjectAt(row_id, column_id).getTypeId() == 'H')
 		{
 			setBackground(Color.blue);
 		}
-    	else if(model.getStateAt(row_id, column_id).getTypeId() == 'D')
+    	else if(model.getObjectAt(row_id, column_id).getTypeId() == 'D')
 		{
 			setBackground(Color.red);
 		}
