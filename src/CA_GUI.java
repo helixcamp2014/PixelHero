@@ -108,8 +108,6 @@ public class CA_GUI extends JPanel
      
     private void tick()
     {
-    	//update the CA
-    	model.computeNextState();
     	//update the GUI
     	gridArea.repaint();
     	if(displayTimer != null)

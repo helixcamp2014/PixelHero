@@ -177,22 +177,7 @@ public class PixelHero{
 		return currentStep;
 	}
 	
-	public void computeNextState(){
-		int nextState [][] = new int[rows][columns];
-		
-		//perform "concurrent" computation of next state
-		for(int row = 0; row < rows; row++)
-		{
-			for(int column = 0; column < columns; column++)
-			{
-				//nextState[row][column] = applyRule(row,column,lattice); //TODO: figure out what to do here
-			}
-		}		
-		
-		//replace lattice with next state
-		//lattice = nextState;		
-		currentStep++;
-	}
+	
 	
 	
 	
@@ -414,6 +399,7 @@ public class PixelHero{
 			//normally you should check what type of object is at row, column but we only have monsters right now
 			//so fight it!
 			//this will totally crash if you have a wall or tree at row, column
+			//TODO: handle other object types properly!
 			Character aCharacter = (Character)getObjectAt(row, column);
 			if(aCharacter.alive)
 			{
@@ -437,9 +423,6 @@ public class PixelHero{
 	
 	public void resolveCombat(Hero theHero, Character aMonster, JTextArea output)
     {
-    	//moved into character
-		//double hero_chance_to_hit_dragon = 0.80;
-    	//double dragon_chance_to_hit_hero = 0.80;
     	
     	if(Math.random() < theHero.chance_to_hit_an_enemy)
     	{
