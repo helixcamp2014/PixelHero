@@ -19,11 +19,17 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
     	
     	if(model.getObjectAt(row_id, column_id).getTypeId() == 'H')
 		{
-			setBackground(Color.blue);
+			//setBackground(Color.blue);
+    		setIcon(new ImageIcon("./assets/hero.png"));
 		}
     	else if(model.getObjectAt(row_id, column_id).getTypeId() == 'D')
 		{
-			setBackground(Color.red);
+			//setBackground(Color.red);
+    		setIcon(new ImageIcon("./assets/dragon.png"));
+		}else if(model.getObjectAt(row_id, column_id).getTypeId() == 's')
+		{
+			//setBackground(Color.green);
+    		setIcon(new ImageIcon("./assets/sword.png"));
 		}
 		else
 		{
@@ -55,19 +61,23 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		
 		if(model.getObjectAt(row_id, column_id).getTypeId() == 'H')
 		{
-			setBackground(Color.blue);
+			//setBackground(Color.blue);
+			setIcon(new ImageIcon("./assets/hero.png"));
 		}
     	else if(model.getObjectAt(row_id, column_id).getTypeId() == 'D')
 		{
-			setBackground(Color.red);
+			//setBackground(Color.red);
+    		setIcon(new ImageIcon("./assets/dragon.png"));
 		}
     	else if(model.getObjectAt(row_id, column_id).getTypeId() == 's')
 		{
-			setBackground(Color.green);
+			//setBackground(Color.green);
+    		setIcon(new ImageIcon("./assets/sword.png"));
 		}
 		else
 		{
 			setBackground(Color.white);
+			setIcon(null);
 		}
 		
 		//System.out.println("grid was painted: " + row_id + ", " + column_id);
