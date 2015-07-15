@@ -113,6 +113,10 @@ public class PixelHero{
 		    				{
 		    					lattice[rowIdx][columnIdx] = new Dragon();
 		    				}
+		    				else if(text.charAt(columnIdx) == 's')
+		    				{
+		    					lattice[rowIdx][columnIdx] = new Sword();
+		    				}
 		    			}
 		    		}
 		    		rowIdx++;
@@ -400,16 +404,33 @@ public class PixelHero{
 			//so fight it!
 			//this will totally crash if you have a wall or tree at row, column
 			//TODO: handle other object types properly!
-			Character aCharacter = (Character)getObjectAt(row, column);
-			if(aCharacter.alive)
+			Character aCharacter;
+			try{
+				aCharacter = (Character)getObjectAt(row, column);
+			}catch(Exception e){
+				aCharacter = null;
+			}
+			if(aCharacter != null && aCharacter.alive)
 			{
 				resolveCombat(ourHero, aCharacter , output);
 			}
-			else
+			else if(aCharacter != null)
 			{
 				String temp = "The " + aCharacter.description + " is dead... \n";
 				output.append(temp);
 
+			}
+			else{
+				//it's not a character maybe it's an item?
+				Weapon weapon = (Weapon)getObjectAt(row,column);
+				if(weapon != null){
+					//hero picks up the weapon
+					ourHero.weapon = weapon;
+					String temp = "The hero has picked up " + weapon.description + "\n";
+					output.append(temp);
+					//take the weapon off of the ground
+					lattice[row][column] = null;
+				}
 			}
 		}
 		else

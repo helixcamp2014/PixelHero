@@ -61,6 +61,10 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		{
 			setBackground(Color.red);
 		}
+    	else if(model.getObjectAt(row_id, column_id).getTypeId() == 's')
+		{
+			setBackground(Color.green);
+		}
 		else
 		{
 			setBackground(Color.white);

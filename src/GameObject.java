@@ -1,8 +1,12 @@
-
+/*
+ * This class is the basis for all characters and objects in the game
+ * 
+ */
 public class GameObject {
 	protected char type_id = '0'; // let's say this means undefined
 	protected int row_index = 0;
 	protected int column_index = 0; 
+	public boolean isItem = false;
 	
 	protected boolean canBeSteppedOn = false;
 	
