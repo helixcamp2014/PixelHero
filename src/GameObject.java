@@ -7,6 +7,7 @@ public class GameObject {
 	protected int row_index = 0;
 	protected int column_index = 0; 
 	public boolean isItem = false;
+	public boolean isObstacle = false;
 	
 	protected boolean canBeSteppedOn = false;
 	

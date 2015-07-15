@@ -117,6 +117,10 @@ public class PixelHero{
 		    				{
 		    					lattice[rowIdx][columnIdx] = new Sword();
 		    				}
+		    				else if(text.charAt(columnIdx) == 'w')
+		    				{
+		    					lattice[rowIdx][columnIdx] = new Wall();
+		    				}
 		    			}
 		    		}
 		    		rowIdx++;

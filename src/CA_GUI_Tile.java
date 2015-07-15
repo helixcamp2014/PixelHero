@@ -31,6 +31,11 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 			//setBackground(Color.green);
     		setIcon(new ImageIcon("./assets/sword.png"));
 		}
+		else if(model.getObjectAt(row_id, column_id).getTypeId() == 'w')
+		{
+			//setBackground(Color.green);
+    		setIcon(new ImageIcon("./assets/wall.png"));
+		}
 		else
 		{
 			setBackground(Color.white);
@@ -73,6 +78,11 @@ public class CA_GUI_Tile extends JLabel implements MouseListener {
 		{
 			//setBackground(Color.green);
     		setIcon(new ImageIcon("./assets/sword.png"));
+		}
+    	else if(model.getObjectAt(row_id, column_id).getTypeId() == 'w')
+		{
+			//setBackground(Color.green);
+    		setIcon(new ImageIcon("./assets/wall.png"));
 		}
 		else
 		{
